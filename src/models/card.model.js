@@ -1,21 +1,29 @@
 const { Schema, model } = require("mongoose");
+const nameRegex = new RegExp("[a-zA-Z0-9]");
+const descriptionRegex = new RegExp("[a-zA-Z0-9]");
 
 const cardSchema = new Schema(
-    {
-      name: String,
-      description: String,
-      date: Date,
-      members: [String]
+  {
+    name: {
+      type: String,
+      required: true,
+      maxlength: 15,
+      match: [nameRegex, "Invalid characters"],
     },
-    {
-      timestamps: true,
-    }
-  );
-  
-  //Recibe dos argumentos
-  //-- String con el nombre del model
-  //-- Schema que creamos arriba
-  
-  const Card = model("Card", cardSchema);
-  
-  module.exports = Card;
+    description: {
+      type: String,
+      required: false,
+      maxlength: 120,
+      match: [descriptionRegex, "Invalid characters"],
+    },
+    date: Date,
+    members: [String],
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Card = model("Card", cardSchema);
+
+module.exports = Card;
