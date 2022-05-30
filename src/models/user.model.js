@@ -4,7 +4,7 @@ const nickNameRegex = new RegExp("[a-zA-Z0-9]");
 const emailRegex = new RegExp(
   "[a-zA-Z0-9!#$%&'*_+-]([.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$/()=?¿!.,:;]|d)+[a-zA-Z0-9][.][a-zA-Z]{2,4}([.][a-zA-Z]{2})?"
 );
-const passwordRegex = new RegExp("(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,12}");
+const passwordRegex = new RegExp("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,12}");
 
 const userSchema = new Schema(
   {
@@ -16,7 +16,7 @@ const userSchema = new Schema(
     },
     nickname: {
       type: String,
-      required: false,
+      required: true,
       match: [nickNameRegex, "Invalid nickname"],
       maxlength: [10, "Name must have less than 10 characters"],
     },

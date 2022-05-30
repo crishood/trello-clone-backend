@@ -17,7 +17,6 @@ const cardSchema = new Schema(
       match: [descriptionRegex, "Invalid characters"],
     },
     date: Date,
-    members: [String],
   },
   {
     timestamps: true,
