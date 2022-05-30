@@ -12,10 +12,6 @@ const userSchema = new Schema(
     }
   );
   
-  //Recibe dos argumentos
-  //-- String con el nombre del model
-  //-- Schema que creamos arriba
-  
   const User = model("User", userSchema);
   
   module.exports = User;
