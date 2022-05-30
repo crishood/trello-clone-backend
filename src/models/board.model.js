@@ -11,6 +11,11 @@ const boardSchema = new Schema(
         },
       marked: Boolean,
       closed: Boolean,
+      user: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true
+      }
     },
     {
       timestamps: true,

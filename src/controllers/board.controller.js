@@ -1,4 +1,5 @@
 const Board = require("../models/board.model");
+const User = require("../models/user.model");
 
 module.exports = {
 
@@ -16,7 +17,11 @@ module.exports = {
     const { boardId } = req.params;
 
     Board.findById(boardId)
-      .then((user) => {
+      .populate({
+          path: "user",
+          select: "nickname email"
+        })
+      .then((board) => {
         res.status(200).json({ message: "board found", data: board });
       })
       .catch((err) => {
@@ -25,20 +30,23 @@ module.exports = {
   },
 
   create(req, res) {
-    const data = req.body;
-    const newBoard = {
-      ...data,
-    };
-
-    Board.create(newBoard)
-      .then((board) => {
-        res.status(201).json({ message: "board created", data: board });
-      })
-      .catch((err) => {
+    const {userId} = req.params;
+    Board.create(
+        {...req.body,
+        user: userId}
+    ).then((board)=>{
+        User.findById(userId).then((user)=>{
+            user.boards.push(board),
+            user.save({validateBeforeSave: false})
+            .then(()=>{
+                res.status(201).json({message: "board created", data: board})
+            })
+        })
+    }).catch((err)=>{
         res
-          .status(400)
-          .json({ message: "Board could not be created", data: err });
-      });
+           .status(400)
+           .json({message: "board could not be created", data: err });
+    })
   },
 
   update(req, res) {

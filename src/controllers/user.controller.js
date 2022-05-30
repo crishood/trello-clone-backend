@@ -16,6 +16,7 @@ module.exports = {
     const { userId } = req.params;
 
     User.findById(userId)
+      .populate("boards","name")
       .then((user) => {
         res.status(200).json({ message: "User found", data: user });
       })
