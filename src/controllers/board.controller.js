@@ -1,5 +1,6 @@
 const Board = require("../models/board.model");
 const User = require("../models/user.model");
+const List = require("../models/list.model");
 
 module.exports = {
 
@@ -20,6 +21,10 @@ module.exports = {
       .populate({
           path: "user",
           select: "nickname email"
+        })
+      .populate({
+          path: "list",
+          select: "name"
         })
       .then((board) => {
         res.status(200).json({ message: "board found", data: board });

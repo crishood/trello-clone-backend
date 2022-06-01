@@ -1,8 +1,20 @@
 const { Schema, model } = require("mongoose");
+const lettersRegex = new RegExp("[a-zA-Z]");
 
 const listSchema = new Schema(
   {
-    name: String,
+    name: {
+      type: String,
+      required: true,
+      maxlength: 20,
+      match: [lettersRegex, "Invalid characters"]
+    },
+    board: {
+      type: Schema.Types.ObjectId,
+      ref: "Board",
+      required: true
+    }
+
   },
   {
     timestamps: true,
