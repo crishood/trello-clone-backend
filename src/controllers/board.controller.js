@@ -20,6 +20,7 @@ module.exports = {
     Board.findById(boardId)
       .populate("user","nickname email")
       .populate("lists", "name")
+      .populate("tags", "name")
       .then((board) => {
         res.status(200).json({ message: "board found", data: board });
       })

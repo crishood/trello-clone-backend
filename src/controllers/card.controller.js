@@ -42,35 +42,21 @@ module.exports = {
       .status(400)
       .json({ message: "Card could not be created", data: err });
     } 
-
-    // const data = req.body;
-    // const newCard = {
-    //   ...data,
-    // };
-
-    // Card.create(newCard)
-    //   .then((card) => {
-    //     res.status(201).json({ message: "Card created", data: card });
-    //   })
-    //   .catch((err) => {
-    //     res
-    //       .status(400)
-    //       .json({ message: "Card could not be created", data: err });
-    //   });
   },
 
-  update(req, res) {
-    const { cardId } = req.params;
+  async update(req, res) {
+    try{
+      const { cardId } = req.params;
 
-    Card.findByIdAndUpdate(cardId, req.body, { new: true })
-      .then((card) => {
-        res.status(200).json({ message: "Card updated", data: card });
-      })
-      .catch((err) => {
-        res
+      const card = await Card.findByIdAndUpdate(cardId, req.body, { new: true });
+      res.status(200).json({ message: "Card updated", data: card });
+
+    }catch(err){
+      res
           .status(400)
           .json({ message: "Card could not be updated", data: err });
-      });
+    }
+
   },
 
   destroy(req, res) {
