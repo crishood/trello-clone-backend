@@ -18,14 +18,8 @@ module.exports = {
     const { boardId } = req.params;
 
     Board.findById(boardId)
-      .populate({
-          path: "user",
-          select: "nickname email"
-        })
-      .populate({
-          path: "list",
-          select: "name"
-        })
+      .populate("user","nickname email")
+      .populate("lists", "name")
       .then((board) => {
         res.status(200).json({ message: "board found", data: board });
       })

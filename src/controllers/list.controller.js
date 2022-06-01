@@ -20,6 +20,7 @@ module.exports = {
         path: "board",
         select: "name"
       })
+      .populate("cards","name")
       .then((list) => {
         res.status(200).json({ message: "Lists found", data: list });
       })

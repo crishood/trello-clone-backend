@@ -13,6 +13,14 @@ const listSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Board",
       required: true
+    },
+    cards: {
+      type:[
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Card"
+        }
+      ]
     }
 
   },
