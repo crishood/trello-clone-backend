@@ -5,6 +5,7 @@ const userRouter = require("./src/routes/user");
 const boardRouter = require("./src/routes/board");
 const cardRouter = require("./src/routes/card");
 const listRouter = require("./src/routes/list");
+const tagRouter = require("./src/routes/tag");
 
 
 const port = 8080;
@@ -18,6 +19,7 @@ app.use("/users", userRouter);
 app.use("/boards", boardRouter);
 app.use("/cards", cardRouter);
 app.use("/lists", listRouter);
+app.use("/tags", tagRouter);
 
 
 app.listen(port, () => {

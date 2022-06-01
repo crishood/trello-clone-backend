@@ -23,6 +23,14 @@ const boardSchema = new Schema(
             ref:"List"
           }
         ]
+      },
+      tags: {
+        type: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: "Tag"
+          }
+        ]
       }
     },
     {

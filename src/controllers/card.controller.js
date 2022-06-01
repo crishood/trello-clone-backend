@@ -17,6 +17,7 @@ module.exports = {
 
     Card.findById(cardId)
       .populate("list","name")
+      .populate("tags","name")
       .then((card) => {
         res.status(200).json({ message: "Card found", data: card });
       })

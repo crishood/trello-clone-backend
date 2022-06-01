@@ -21,6 +21,14 @@ const cardSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "List",
       required: true
+    },
+    tags: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "Tag"
+        }
+      ]
     }
   },
   {
