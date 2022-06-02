@@ -6,7 +6,7 @@ const boardRouter = require("./src/routes/board");
 const cardRouter = require("./src/routes/card");
 const listRouter = require("./src/routes/list");
 const tagRouter = require("./src/routes/tag");
-
+//Install morgan when you begin to work with the frontend to track the request.
 
 const port = 8080;
 const app = express();

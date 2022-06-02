@@ -16,7 +16,7 @@ module.exports = {
     const { cardId } = req.params;
 
     Card.findById(cardId)
-      .populate("list","name")
+      .populate("currentList","name")
       .populate("tags","name")
       .then((card) => {
         res.status(200).json({ message: "Card found", data: card });
@@ -28,12 +28,12 @@ module.exports = {
 
   async create(req, res) {
     try{
-      const { listId } = req.params;
-      const list = await List.findById(listId);
+      const { currentListId } = req.params;
+      const list = await List.findById(currentListId);
       if(!list){
         throw new Error("List not found");
       }
-      const card = await Card.create({ ...req.body, list: listId });
+      const card = await Card.create({ ...req.body, list: currentListId });
       list.cards.push(card);
       await list.save({validateBeforeSave: false});
       res.status(201).json({ message: "Card created", data: card });
@@ -45,11 +45,41 @@ module.exports = {
   },
 
   async update(req, res) {
+    // const { cardId, previousListId, currentListId } = req.body;
+
+    // const previousList = await List.findById(previousListId)
+    // const currentList = await List.findById(currentListId)
+
+    // const previousUpdated =  previusList.cards.filter((item) => item._id ==! cardId);
+    // previousList.cards = previousUpdated;
+
+    // currentList.cards.push(cardId)
+
+    // await previousList.save({ validateBeforeSave: false })
+
+
+    // await currentList.save({ validateBeforeSave: false })
+
     try{
       const { cardId } = req.params;
+      const { nextListId, currentListId } = req.body;
+      const nextList = await List.findById(nextListId);
+      const currentList = await List.findById(currentListId);
+      const currentUpdated =  currentList.cards.filter((item) => item._id ==! cardId);
+      currentList.cards = currentUpdated;
+      nextList.cards.push(cardId);
+
+      await currentList.save({validateBeforeSave:false});
+      await nextList.save({validateBeforeSave:false});
 
       const card = await Card.findByIdAndUpdate(cardId, req.body, { new: true });
-      res.status(200).json({ message: "Card updated", data: card });
+      
+      
+      
+
+
+      res.status(200).json({ message: "Card updated", data: card});
+
 
     }catch(err){
       res

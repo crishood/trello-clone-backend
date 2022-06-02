@@ -17,10 +17,14 @@ const cardSchema = new Schema(
       match: [descriptionRegex, "Invalid characters"],
     },
     date: Date,
-    list: {
+    currentList: {
       type: Schema.Types.ObjectId,
       ref: "List",
       required: true
+    },
+    nextList:{
+      type: Schema.Types.ObjectId,
+      ref: "List",
     },
     tags: {
       type: [

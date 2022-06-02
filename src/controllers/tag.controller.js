@@ -67,7 +67,7 @@ module.exports = {
         }catch(err){
             res
             .status(400)
-            .json({ message: "List could not be destroyed", data: err });
+            .json({ message: "Tag could not be destroyed", data: err });
         }
     },
   };
