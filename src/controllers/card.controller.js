@@ -46,18 +46,12 @@ module.exports = {
 
   async update(req, res) {
     // const { cardId, previousListId, currentListId } = req.body;
-
     // const previousList = await List.findById(previousListId)
     // const currentList = await List.findById(currentListId)
-
     // const previousUpdated =  previusList.cards.filter((item) => item._id ==! cardId);
     // previousList.cards = previousUpdated;
-
     // currentList.cards.push(cardId)
-
     // await previousList.save({ validateBeforeSave: false })
-
-
     // await currentList.save({ validateBeforeSave: false })
 
     try{
@@ -68,16 +62,9 @@ module.exports = {
       const currentUpdated =  currentList.cards.filter((item) => item._id ==! cardId);
       currentList.cards = currentUpdated;
       nextList.cards.push(cardId);
-
       await currentList.save({validateBeforeSave:false});
       await nextList.save({validateBeforeSave:false});
-
       const card = await Card.findByIdAndUpdate(cardId, req.body, { new: true });
-      
-      
-      
-
-
       res.status(200).json({ message: "Card updated", data: card});
 
 
