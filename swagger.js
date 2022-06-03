@@ -251,6 +251,161 @@ const swaggerDocument = {
         },
       },
     },
+    "cloneTrello/boards": {
+      get: {
+        tags: ["Board"],
+        description: "This get to list all boards",
+        produces: ["application/json"],
+        responses: {
+          200: {
+            description: "Boards found",
+            schema: {
+              $ref: "#/definitions/boardGetResponse",
+            },
+          },
+          404: {
+            description: "Boards not found",
+          },
+        },
+      },
+    },
+    "cloneTrello/boards/{boardId}": {
+      get: {
+        tags: ["Board"],
+        description: "Returns a single board",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "boardId",
+            in: "path",
+            description: "ID of board to return",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Board found",
+            schema: {
+              $ref: "#/definitions/boardGetResponse",
+            },
+          },
+          404: {
+            description: "Board not found",
+          },
+        },
+      },
+      put: {
+        tags: ["Board"],
+        description: "Updates a board with form data",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "boardId",
+            in: "path",
+            description: "ID of board that needs to be updated",
+            required: true,
+            type: "string",
+          },
+          {
+            name: "name",
+            in: "formData",
+            description: "Update board name",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "marked",
+            in: "formData",
+            description: "Update board marking",
+            required: false,
+            type: "boolean",
+            default: "false",
+          },
+          {
+            name: "closed",
+            in: "formData",
+            description: "Update board closing",
+            required: false,
+            type: "boolean",
+            default: "false",
+          },
+          {
+            name: "userId",
+            in: "formData",
+            description: "Update user with userId",
+            required: false,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Board updated",
+            schema: {
+              $ref: "#/definitions/boardUpdateResponse",
+            },
+          },
+          400: {
+            description: "Board could not be updated",
+          },
+        },
+      },
+      delete: {
+        tags: ["Board"],
+        description: "Deletes a board",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "api_key",
+            in: "header",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "boardId",
+            in: "path",
+            description: "Board id to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Board destroyed",
+          },
+          400: {
+            description: "Board could not be destroyed",
+          },
+        },
+      },
+    },
+    "cloneTrello/boards/{userId}": {
+      post: {
+        tags: ["Board"],
+        description: "This post create a new board",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "userId",
+            in: "path",
+            description: "ID of user to create a new board",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Board created",
+            schema: {
+              $ref: "#/definitions/boardPostResponse",
+            },
+          },
+          400: {
+            description: "Board could not be created",
+          },
+        },
+      },
+    },
   },
   definitions: {
     userCreateResponse: {
@@ -304,6 +459,80 @@ const swaggerDocument = {
         },
         password: {
           type: "string",
+        },
+      },
+    },
+    boardGetResponse: {
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        marked: {
+          type: "boolean",
+          default: "false",
+        },
+        closed: {
+          type: "boolean",
+          default: "false",
+        },
+        user: {
+          type: "array",
+          $ref: "#/definitions/UserBoard",
+        },
+      },
+    },
+    UserBoard: {
+      type: "object",
+      properties: {
+        nickname: {
+          type: "string",
+        },
+        email: {
+          type: "string",
+        },
+      },
+    },
+    boardUpdateResponse: {
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        marked: {
+          type: "boolean",
+          default: "false",
+        },
+        closed: {
+          type: "boolean",
+          default: "false",
+        },
+        user: {
+          type: "array",
+          $ref: "#/definitions/UserBoard",
+        },
+      },
+    },
+    boardPostResponse: {
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        marked: {
+          type: "boolean",
+          default: "false",
+        },
+        closed: {
+          type: "boolean",
+          default: "false",
+        },
+        user: {
+          type: "string",
+          example: "userId",
         },
       },
     },
