@@ -6,8 +6,8 @@ const boardRouter = require("./src/routes/board");
 const cardRouter = require("./src/routes/card");
 const listRouter = require("./src/routes/list");
 const tagRouter = require("./src/routes/tag");
-const {auth} = require("./src/utils/auth");
-//Install morgan when you begin to work with the frontend to track the request.
+const { auth } = require("./src/utils/auth");
+const morgan = require("morgan");
 
 const port = 8080;
 const app = express();
@@ -15,6 +15,7 @@ connect();
 
 app.use(express.json());
 app.use(cors());
+app.use(morgan("dev"));
 
 app.use("/users", userRouter);
 app.use("/boards", boardRouter);
