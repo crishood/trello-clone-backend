@@ -32,52 +32,6 @@ const swaggerDocument = {
   ],
   paths: {
     "cloneTrello/users": {
-      post: {
-        tags: ["User"],
-        description: "This post for created user",
-        produces: ["application/json"],
-        parameters: [
-          {
-            name: "name",
-            in: "body",
-            description: "User name",
-            required: true,
-            type: "string",
-          },
-          {
-            name: "nickname",
-            in: "body",
-            description: "User nickname",
-            required: true,
-            type: "string",
-          },
-          {
-            name: "email",
-            in: "body",
-            description: "User email",
-            required: true,
-            type: "string",
-          },
-          {
-            name: "password",
-            in: "body",
-            description: "User password",
-            required: true,
-            type: "string",
-          },
-        ],
-        responses: {
-          201: {
-            description: "User created",
-            schema: {
-              $ref: "#/definitions/userCreateResponse",
-            },
-          },
-          400: {
-            description: "User could not be created",
-          },
-        },
-      },
       get: {
         tags: ["User"],
         description: "This get to list all users",
