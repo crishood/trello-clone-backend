@@ -1,38 +1,37 @@
 const { Schema, model } = require("mongoose");
 const lettersRegex = new RegExp("[a-zA-Z]");
 
-const listSchema = new Schema(
+const tagSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
-      maxlength: 20,
+      maxlength: 10,
       match: [lettersRegex, "Invalid characters"]
+    },
+    color: {
+        type: String,
+        required: true
     },
     board: {
       type: Schema.Types.ObjectId,
       ref: "Board",
-      required: true
+      required: true,
     },
     cards: {
-      type:[
-        {
-          type: Schema.Types.ObjectId,
-          ref: "Card"
-        }
-      ]
+        type: [{
+            type: Schema.Types.ObjectId,
+            ref: "Card",
+            required: true,
+        }]
     }
-
   },
   {
     timestamps: true,
   }
 );
 
-//Recibe dos argumentos
-//-- String con el nombre del model
-//-- Schema que creamos arriba
 
-const List = model("List", listSchema);
+const Tag = model("Tag", tagSchema);
 
-module.exports = List;
+module.exports = Tag;
