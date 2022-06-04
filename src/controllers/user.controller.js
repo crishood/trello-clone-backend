@@ -6,15 +6,16 @@ module.exports = {
   async register(req, res) {
     try {
       const { email, password, name, nickname } = req.body;
-      const encPassword = await bcrypt.hash(password, 8);
+      const encPassword = await bcrypt.hash(password, process.env.rennalla);
       const user = await User.create({
         email,
         password: encPassword,
         name,
         nickname,
       });
-      const token = jwt.sign({ id: user._id }, "tr3110", {
-        expiresIn: 60 * 60 * 24,
+
+      const token = jwt.sign({ id: user._id }, process.env.orion, {
+        expiresIn: process.env.timeExpires,
       });
       res.status(200).json({
         message: "User created",
@@ -41,8 +42,8 @@ module.exports = {
       if (!isValid) {
         throw new Error("User or password not valid !");
       }
-      const token = jwt.sign({ id: user._id }, "tr3110", {
-        expiresIn: 60 * 60 * 24,
+      const token = jwt.sign({ id: user._id }, process.env.orion, {
+        expiresIn: process.env.timeExpires,
       });
       res.status(200).json({
         message: "User logged",
