@@ -3,7 +3,7 @@ const listController = require("../controllers/list.controller");
 
 router.route("/").get(listController.list);
 router.route("/:listId").get(listController.show);
-router.route("/").post(listController.create);
+router.route("/:boardId").post(listController.create);
 router.route("/:listId").put(listController.update);
 router.route("/:listId").delete(listController.destroy);
 
