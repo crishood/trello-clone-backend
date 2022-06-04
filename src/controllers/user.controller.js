@@ -13,6 +13,7 @@ module.exports = {
         name,
         nickname,
       });
+
       const token = jwt.sign({ id: user._id }, process.env.orion, {
         expiresIn: process.env.timeExpires,
       });

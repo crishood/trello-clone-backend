@@ -12,7 +12,10 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.js");
 require("dotenv").config();
 
+
 const port = process.env.port;
+
+
 const app = express();
 connect();
 
@@ -25,7 +28,6 @@ app.use("/boards", boardRouter);
 app.use("/cards", cardRouter);
 app.use("/lists", listRouter);
 app.use("/tags", tagRouter);
-
 app.get("/", auth, (req, res) => {
   console.log(req.user);
   res.sendStatus(200);
