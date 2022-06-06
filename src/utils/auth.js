@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config({ path: "./.env" });
 
 exports.auth = (req, res, next) => {
   try {
@@ -19,7 +20,7 @@ exports.auth = (req, res, next) => {
     }
 
     //Reversión de la codificación del token
-    const { id } = jwt.verify(token, "tr3110");
+    const { id } = jwt.verify(token, process.env.ORION);
 
     //Mutar el objeto req en el user (req.user) para poder acceder a el en cualquier parte
     req.user = id;

@@ -10,11 +10,9 @@ const { auth } = require("./src/utils/auth");
 const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.js");
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 
-
-const port = process.env.port;
-
+const port = process.env.PORT || 8000;
 
 const app = express();
 connect();

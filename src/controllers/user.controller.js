@@ -1,21 +1,22 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config({ path: "./.env" });
 
 module.exports = {
   async register(req, res) {
     try {
       const { email, password, name, nickname } = req.body;
-      const encPassword = await bcrypt.hash(password, process.env.rennalla);
+      const encPassword = await bcrypt.hash(password, Number(process.env.RENNALLA));
       const user = await User.create({
-        email,
-        password: encPassword,
         name,
         nickname,
+        email,
+        password: encPassword,
       });
 
-      const token = jwt.sign({ id: user._id }, process.env.orion, {
-        expiresIn: process.env.timeExpires,
+      const token = jwt.sign({ id: user._id }, process.env.ORION, {
+        expiresIn: 60 * 60 * 24 * 365,
       });
       res.status(200).json({
         message: "User created",
@@ -42,8 +43,8 @@ module.exports = {
       if (!isValid) {
         throw new Error("User or password not valid !");
       }
-      const token = jwt.sign({ id: user._id }, process.env.orion, {
-        expiresIn: process.env.timeExpires,
+      const token = jwt.sign({ id: user._id }, process.env.ORION, {
+        expiresIn: 60 * 60 * 24 * 365,
       });
       res.status(200).json({
         message: "User logged",
