@@ -27,7 +27,7 @@ module.exports = {
 
   async create(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.user;
       const board = await Board.create({ ...req.body, user: userId });
       const user = await User.findById(userId);
       user.boards.push(board);

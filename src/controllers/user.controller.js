@@ -7,7 +7,10 @@ module.exports = {
   async register(req, res) {
     try {
       const { email, password, name, nickname } = req.body;
-      const encPassword = await bcrypt.hash(password, Number(process.env.RENNALLA));
+      const encPassword = await bcrypt.hash(
+        password,
+        Number(process.env.RENNALLA)
+      );
       const user = await User.create({
         name,
         nickname,
@@ -71,7 +74,7 @@ module.exports = {
 
   async show(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.user;
       const user = await User.findById(userId).populate("boards", "name");
       res.status(200).json({ message: "User found", data: user });
     } catch (err) {
@@ -81,7 +84,7 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.user;
       const user = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
       });
@@ -92,7 +95,7 @@ module.exports = {
 
   async destroy(req, res) {
     try {
-      const { userId } = req.params;
+      const userId = req.user;
       const user = await User.findByIdAndDelete(userId);
       res.status(200).json({ message: "User destroyed", data: user });
     } catch (err) {
