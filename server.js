@@ -26,10 +26,10 @@ app.use("/boards", boardRouter);
 app.use("/cards", cardRouter);
 app.use("/lists", listRouter);
 app.use("/tags", tagRouter);
-app.get("/", auth, (req, res) => {
-  console.log(req.user);
-  res.sendStatus(200);
-});
+// app.get("/", auth, (req, res) => {
+//   console.log(req.user);
+//   res.sendStatus(200);
+// });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

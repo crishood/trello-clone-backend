@@ -5,7 +5,7 @@ exports.auth = (req, res, next) => {
   try {
     // En el back minuscula, en el front mayuscula
     const { authorization } = req.headers;
-
+    console.log(req.headers);
     //Para verificar que trae el encabezado
     if (!authorization) {
       throw new Error("Session expired");
@@ -16,7 +16,7 @@ exports.auth = (req, res, next) => {
 
     //Para verificar que trae el token
     if (!token) {
-      throw new Error("Session expired");
+      throw new Error("Session expired !");
     }
 
     //Reversión de la codificación del token
