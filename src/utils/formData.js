@@ -7,13 +7,17 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// const data = new FormData();
-// data.append("username", username);
-// data.append("file", file);
-
 formData = (req, res, next) => {
+  let uploadingFile = false;
+
+  const done = () => {
+    if (uploadingFile) return;
+    next();
+  };
+
   const bb = Busboy({ headers: req.headers });
   req.body = {};
+
   //Captura partes que no son un archivo
   bb.on("field", (key, val) => {
     req.body[key] = val;
@@ -21,13 +25,15 @@ formData = (req, res, next) => {
 
   //Captura partes que si son un archivo
   bb.on("file", (key, stream) => {
+    uploadingFile = true;
     const cloud = cloudinary.uploader.upload_stream(
-      { upload_preset: "Trello_imgProfile" },
+      { upload_preset: "test-preset" },
       (err, res) => {
         if (err) throw new Error("Something went wrong!");
 
-        // console.log("response cloudinary", res);
-        req.body[key] = res;
+        req.body[key] = res.secure_url;
+        uploadingFile = false;
+        done();
       }
     );
 
@@ -41,7 +47,7 @@ formData = (req, res, next) => {
   });
 
   bb.on("finish", () => {
-    next();
+    done();
   });
 
   req.pipe(bb);
