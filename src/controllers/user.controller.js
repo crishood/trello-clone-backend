@@ -6,7 +6,7 @@ require("dotenv").config({ path: "./.env" });
 module.exports = {
   async register(req, res) {
     try {
-      const { email, password, name, nickname } = req.body;
+      const { email, password, name, nickname, picture } = req.body;
       const encPassword = await bcrypt.hash(
         password,
         Number(process.env.RENNALLA)
@@ -16,6 +16,7 @@ module.exports = {
         nickname,
         email,
         password: encPassword,
+        picture,
       });
 
       const token = jwt.sign({ id: user._id }, process.env.ORION, {
@@ -28,6 +29,7 @@ module.exports = {
           name: user.name,
           nickname: user.nickname,
           email: user.email,
+          picture: user.picture,
         },
       });
     } catch (err) {
@@ -56,6 +58,7 @@ module.exports = {
           name: user.name,
           nickname: user.nickname,
           email: user.email,
+          picture: user.picture,
         },
       });
     } catch (err) {
@@ -85,9 +88,11 @@ module.exports = {
   async update(req, res) {
     try {
       const userId = req.user;
+      console.log(req.body);
       const user = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
       });
+      res.status(200).json({ message: "User update" });
     } catch (err) {
       res.status(400).json({ message: "User could not be updated", data: err });
     }
