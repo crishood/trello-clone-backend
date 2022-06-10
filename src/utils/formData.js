@@ -14,7 +14,6 @@ cloudinary.config({
 formData = (req, res, next) => {
   const bb = Busboy({ headers: req.headers });
   req.body = {};
-
   //Captura partes que no son un archivo
   bb.on("field", (key, val) => {
     req.body[key] = val;
@@ -23,11 +22,11 @@ formData = (req, res, next) => {
   //Captura partes que si son un archivo
   bb.on("file", (key, stream) => {
     const cloud = cloudinary.uploader.upload_stream(
-      { upload_preset: "profile-imgs" },
+      { upload_preset: "Trello_imgProfile" },
       (err, res) => {
         if (err) throw new Error("Something went wrong!");
 
-        console.log("response cloudinary", res);
+        // console.log("response cloudinary", res);
         req.body[key] = res;
       }
     );

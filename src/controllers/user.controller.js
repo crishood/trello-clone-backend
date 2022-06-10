@@ -16,8 +16,7 @@ module.exports = {
         nickname,
         email,
         password: encPassword,
-        picture:
-          "https://res.cloudinary.com/clontrello/image/upload/v1654708527/samples/animals/reindeer.jpg",
+        picture,
       });
 
       const token = jwt.sign({ id: user._id }, process.env.ORION, {
@@ -89,6 +88,7 @@ module.exports = {
   async update(req, res) {
     try {
       const userId = req.user;
+      console.log(req.body);
       const user = await User.findByIdAndUpdate(userId, req.body, {
         new: true,
       });
