@@ -22,8 +22,8 @@ exports.welcome = ({ name, email }) => {
     from: `"${process.env.MAIL_USERNAME}"<${process.env.MAIL_USER}>`,
     to: email,
     subject: "Bienvenido a la aplicación Clon de Trello",
-    html: `<div style="background-color:aquamarine">
-  <h1>
+    html: `<div>
+  <h1 style="color:aquamarine">
     Hola! <strong>${name}</strong>, gracias por darnos tu confianza para
     ayudarte en tus tareas
   </h1>
