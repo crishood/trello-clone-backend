@@ -16,7 +16,8 @@ module.exports = {
         nickname,
         email,
         password: encPassword,
-        picture,
+        picture:
+          "https://res.cloudinary.com/clontrello/image/upload/v1654708527/samples/animals/reindeer.jpg",
       });
 
       const token = jwt.sign({ id: user._id }, process.env.ORION, {
