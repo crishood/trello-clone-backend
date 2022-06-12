@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({ path: "./.env" });
+const { transporter, welcome } = require("../utils/mailer");
 
 module.exports = {
   async register(req, res) {
@@ -32,6 +33,8 @@ module.exports = {
           picture: user.picture,
         },
       });
+
+      await transporter.sendMail(welcome(user));
     } catch (err) {
       res.status(400).json({ message: "User could not be registered" });
     }

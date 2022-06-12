@@ -11,11 +11,13 @@ const morgan = require("morgan");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.js");
 require("dotenv").config({ path: "./.env" });
+const { transporter, verify } = require("./src/utils/mailer");
 
 const port = process.env.PORT || 8000;
 
 const app = express();
 connect();
+verify(transporter);
 
 app.use(express.json());
 app.use(cors());
