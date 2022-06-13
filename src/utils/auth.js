@@ -16,7 +16,7 @@ exports.auth = (req, res, next) => {
 
     //Para verificar que trae el token
     if (!token) {
-      throw new Error("Session expired");
+      throw new Error("Session expired !");
     }
 
     //Reversión de la codificación del token
