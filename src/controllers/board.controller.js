@@ -15,7 +15,7 @@ module.exports = {
   async show(req, res) {
     try {
       const { boardId } = req.params;
-      const board = Board.findById(boardId)
+      const board = await Board.findById(boardId)
         .populate("user", "nickname email")
         .populate("lists", "name")
         .populate("tags", "name");
