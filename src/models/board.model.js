@@ -13,6 +13,10 @@ const boardSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    color: {
+      type: String,
+      required: true,
+    },
     closed: {
       type: Boolean,
       required: true,
