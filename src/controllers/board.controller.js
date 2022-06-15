@@ -5,7 +5,8 @@ const List = require("../models/list.model");
 module.exports = {
   async list(req, res) {
     try {
-      const boards = await Board.find();
+      const userId = req.user;
+      const boards = await Board.find({ user: userId });
       res.status(200).json({ message: "Boards found", data: boards });
     } catch (err) {
       res.status(404).json({ message: "Boards not found" });
