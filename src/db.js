@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 
 function connect() {
-  const mongoUri = process.env.NOTHING_HERE_ATLAS || process.env.NOTHING_HERE;
-
-  mongoose.connect(mongoUri, {
+  mongoose.connect("mongodb://localhost:27017/trello", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

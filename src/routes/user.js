@@ -1,13 +1,10 @@
 const router = require("express").Router();
-const { route } = require("express/lib/application");
 const userController = require("../controllers/user.controller");
-const { auth } = require("../utils/auth");
-const formData = require("../utils/formData");
 
 router.route("/").get(userController.list);
-router.route("/register").post(userController.register);
-router.route("/login").post(userController.login);
-router.route("/myuser").get(auth, userController.show);
-router.route("/").put(auth, formData, userController.update);
-router.route("/").delete(auth, userController.destroy);
+router.route("/:userId").get(userController.show);
+router.route("/").post(userController.create);
+router.route("/:userId").put(userController.update);
+router.route("/:userId").delete(userController.destroy);
+
 module.exports = router;
