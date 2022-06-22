@@ -61,6 +61,7 @@ module.exports = {
     try {
       const { listId } = req.params;
       const list = await List.findByIdAndDelete(listId);
+      res.status(201).json({ message: "List deleted", data: list });
     } catch (err) {
       res
         .status(400)
