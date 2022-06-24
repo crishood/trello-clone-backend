@@ -6,7 +6,10 @@ module.exports = {
   async list(req, res) {
     try {
       const { boardId } = req.params;
-      const lists = await List.find({ board: boardId });
+      const lists = await List.find({ board: boardId }).populate({
+        path: "cards",
+        populate: { path: "tags" },
+      });
 
       res.status(200).json({ message: "Lists found", data: lists });
     } catch (err) {
@@ -18,10 +21,7 @@ module.exports = {
     try {
       const { listId } = req.params;
       const list = await List.findById(listId)
-        .populate({
-          path: "board",
-          select: "name",
-        })
+        .populate("board")
         .populate("cards", "name");
       res.status(200).json({ message: "Lists found", data: list });
     } catch (err) {
@@ -61,6 +61,7 @@ module.exports = {
     try {
       const { listId } = req.params;
       const list = await List.findByIdAndDelete(listId);
+      res.status(201).json({ message: "List deleted", data: list });
     } catch (err) {
       res
         .status(400)
