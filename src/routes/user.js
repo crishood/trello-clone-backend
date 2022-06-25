@@ -9,5 +9,6 @@ router.route("/register").post(userController.register);
 router.route("/login").post(userController.login);
 router.route("/myuser").get(auth, userController.show);
 router.route("/").put(auth, formData, userController.update);
+router.route("/myuser").put(auth, userController.update);
 router.route("/").delete(auth, userController.destroy);
 module.exports = router;

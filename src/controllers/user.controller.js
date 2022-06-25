@@ -7,7 +7,7 @@ const { transporter, welcome } = require("../utils/mailer");
 module.exports = {
   async register(req, res) {
     try {
-      const { email, password, name, nickname, picture } = req.body;
+      const { email, password, name, nickname } = req.body;
       const encPassword = await bcrypt.hash(
         password,
         Number(process.env.RENNALLA)
@@ -17,6 +17,7 @@ module.exports = {
         nickname,
         email,
         password: encPassword,
+        premium: false,
         picture:
           "https://res.cloudinary.com/clontrello/image/upload/v1654708527/samples/animals/reindeer.jpg",
       });
@@ -32,6 +33,7 @@ module.exports = {
           nickname: user.nickname,
           email: user.email,
           picture: user.picture,
+          premium: user.premium,
         },
       });
 
@@ -63,6 +65,7 @@ module.exports = {
           nickname: user.nickname,
           email: user.email,
           picture: user.picture,
+          premium: user.premium,
         },
       });
     } catch (err) {

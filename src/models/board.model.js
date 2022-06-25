@@ -22,9 +22,13 @@ const boardSchema = new Schema(
       required: true,
     },
     user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+      ],
     },
     lists: {
       type: [
