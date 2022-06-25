@@ -111,8 +111,6 @@ module.exports = {
       const { actualPassword, newPassword } = req.body;
       const userId = req.user;
       const user = await User.findById(userId);
-      console.log(actualPassword);
-      console.log(user);
 
       if (!user) {
         res.status(404).json({ message: "User not found" });
@@ -155,7 +153,28 @@ module.exports = {
     }
   },
 
-  async recoveredpassword(req, res) {},
+  async recoveredpassword(req, res) {
+    try {
+      const { email, newPassword } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+      }
+
+      const newEncPassword = await bcrypt.hash(newPassword, 8);
+      user.password = newEncPassword;
+      await user.save({ validateBeforeSave: false });
+
+      res.status(201).json({ message: "Password changed successfully", user });
+
+      await transporter.sendMail(mailChangePassword(user));
+    } catch (err) {
+      res
+        .status(400)
+        .json({ message: "Password could not be changed", data: err });
+    }
+  },
 
   async destroy(req, res) {
     try {
