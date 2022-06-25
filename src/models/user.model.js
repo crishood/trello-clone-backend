@@ -31,6 +31,10 @@ const userSchema = new Schema(
     picture: {
       type: String,
     },
+    premium: {
+      type: Boolean,
+      required: true,
+    },
     boards: {
       type: [
         {
