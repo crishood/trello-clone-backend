@@ -37,3 +37,38 @@ exports.welcome = ({ name, email }) => {
     objetivos con nosotros!`,
   };
 };
+
+exports.mailChangePassword = ({ name, email }) => {
+  return {
+    from: `"${process.env.MAIL_USERNAME}"<${process.env.MAIL_USER}>`,
+    to: email,
+    subject: "Cambio de contraseña EXITOSO",
+    html: `<div>
+  <h1 style="color:aquamarine">
+    Hola! <strong>${name}</strong>.
+  </h1>
+  <p>
+    Te informamos que el cambio realizado de la contraseña en nuestra página web, fue exitoso!
+  </p>
+</div>`,
+    text: `<strong>${name}</strong>, Recuerda visitarnos para seguir completando todas tus tareas`,
+  };
+};
+
+exports.mailRecoveredPassword = ({ name, email }, token) => {
+  return {
+    from: `"${process.env.MAIL_USERNAME}"<${process.env.MAIL_USER}>`,
+    to: email,
+    subject: "Recuperación contraseña en TRELLO",
+    html: `<div>
+  <h1 style="color:aquamarine">
+    Hola! <strong>${name}</strong>.
+  </h1>
+  <p>
+    Te informamos que para recuperar la contraseña debes entrar al siguiente link.
+  </p>
+  <a href="http://localhost:3000/rec-password/${token}">Link para recuperar tu contraseña</a>
+</div>`,
+    text: `Recuperando contraseña de: <strong>${name}</strong>, Recuerda visitarnos para seguir completando todas tus tareas`,
+  };
+};
