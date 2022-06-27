@@ -17,7 +17,7 @@ module.exports = {
     try {
       const { boardId } = req.params;
       const board = await Board.findById(boardId)
-        .populate("user", "nickname email")
+        .populate("user", "nickname email picture")
         .populate("lists", "name")
         .populate("tags", "name");
       res.status(200).json({ message: "board found", data: board });

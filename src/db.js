@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 function connect() {
-  const mongoUri = process.env.NOTHING_HERE_ATLAS || process.env.NOTHING_HERE;
+  const mongoUri = process.env.NOTHING_HERE;
 
   mongoose.connect(mongoUri, {
     useNewUrlParser: true,

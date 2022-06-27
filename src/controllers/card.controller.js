@@ -52,7 +52,7 @@ module.exports = {
   async destroy(req, res) {
     try {
       const { cardId } = req.params;
-      const card = Card.findByIdAndDelete(cardId);
+      const card = await Card.findByIdAndDelete(cardId);
       res.status(200).json({ message: "Card destroyed", data: card });
     } catch (err) {
       res
