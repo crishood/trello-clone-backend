@@ -7,30 +7,22 @@ const tagSchema = new Schema(
       type: String,
       required: true,
       maxlength: 10,
-      match: [lettersRegex, "Invalid characters"]
+      match: [lettersRegex, "Invalid characters"],
     },
     color: {
-        type: String,
-        required: true
-    },
-    board: {
-      type: Schema.Types.ObjectId,
-      ref: "Board",
+      type: String,
       required: true,
     },
-    cards: {
-        type: [{
-            type: Schema.Types.ObjectId,
-            ref: "Card",
-            required: true,
-        }]
-    }
+    card: {
+      type: Schema.Types.ObjectId,
+      ref: "Card",
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
-
 
 const Tag = model("Tag", tagSchema);
 

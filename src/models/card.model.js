@@ -16,20 +16,20 @@ const cardSchema = new Schema(
       maxlength: 120,
       match: [descriptionRegex, "Invalid characters"],
     },
-    date: Date,
+    date: { type: Array },
     list: {
       type: Schema.Types.ObjectId,
       ref: "List",
-      required: true
+      required: true,
     },
     tags: {
       type: [
         {
           type: Schema.Types.ObjectId,
-          ref: "Tag"
-        }
-      ]
-    }
+          ref: "Tag",
+        },
+      ],
+    },
   },
   {
     timestamps: true,
