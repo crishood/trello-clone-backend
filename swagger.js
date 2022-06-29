@@ -548,6 +548,152 @@ const swaggerDocument = {
         },
       },
     },
+    "trello/cards": {
+      get: {
+        tags: ["Card"],
+        description: "This get to list all cards from authorization user",
+        produces: ["application/json"],
+        responses: {
+          200: {
+            description: "Cards found",
+            schema: {
+              $ref: "#/definitions/cardGetResponse",
+            },
+          },
+          404: {
+            description: "Cards not found",
+          },
+        },
+      },
+    },
+    "trello/cards/{listId}": {
+      post: {
+        tags: ["Card"],
+        description: "This post to create a card with listId from logged user",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "listId",
+            in: "path",
+            description: "ID of list to create a Card",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          201: {
+            description: "Card created",
+            schema: {
+              $ref: "#/definitions/cardPostResponse",
+            },
+          },
+          400: {
+            description: "Card failed",
+          },
+        },
+      },
+    },
+    "trello/cards/{cardId}": {
+      get: {
+        tags: ["Card"],
+        description: "Returns a single card",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "cardId",
+            in: "path",
+            description: "ID of card to return",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Card found",
+            schema: {
+              $ref: "#/definitions/cardGetResponse",
+            },
+          },
+          404: {
+            description: "Card not found",
+          },
+        },
+      },
+      put: {
+        tags: ["Card"],
+        description: "Updates a card with form data",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "cardId",
+            in: "path",
+            description: "ID of card that needs to be updated",
+            required: true,
+            type: "string",
+          },
+          {
+            name: "name",
+            in: "formData",
+            description: "Update card name",
+            required: true,
+            type: "string",
+          },
+          {
+            name: "description",
+            in: "formData",
+            description: "Update card description",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "date",
+            in: "formData",
+            description: "Update card date",
+            required: false,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Card updated",
+            schema: {
+              $ref: "#/definitions/cardUpdateResponse",
+            },
+          },
+          400: {
+            description: "Card could not be updated",
+          },
+        },
+      },
+      delete: {
+        tags: ["Card"],
+        description: "Deletes a card",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "api_key",
+            in: "header",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "cardId",
+            in: "path",
+            description: "Card id to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Card destroyed",
+          },
+          400: {
+            description: "Card could not be destroyed",
+          },
+        },
+      },
+    },
   },
   definitions: {
     userCreateResponse: {
@@ -687,7 +833,7 @@ const swaggerDocument = {
         },
         board: {
           type: "string",
-          Sref: "#/definitions/BoardList",
+          $ref: "#/definitions/BoardList",
         },
         cards: {
           type: "array",
@@ -760,11 +906,99 @@ const swaggerDocument = {
         },
         board: {
           type: "string",
-          Sref: "#/definitions/BoardList",
+          $ref: "#/definitions/BoardList",
         },
         cards: {
           type: "array",
           $ref: "#/definitions/CardsList",
+        },
+      },
+    },
+    cardGetResponse: {
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        date: {
+          type: "string",
+        },
+        list: {
+          type: "array",
+          $ref: "#/definitions/listCard",
+        },
+        tags: {
+          type: "array",
+          $ref: "#/definitions/tagsCard",
+        },
+      },
+    },
+    listCard: {
+      type: "object",
+      properties: {
+        _id: {
+          type: "string",
+        },
+      },
+    },
+    tagsCard: {
+      type: "object",
+      properties: {
+        name: {
+          type: "string",
+        },
+        color: {
+          type: "string",
+        },
+      },
+    },
+    cardPostResponse: {
+      type: "object",
+      required: ["name", "list"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        date: {
+          type: "string",
+        },
+        list: {
+          type: "string",
+          example: "listId",
+        },
+        tags: {
+          type: "array",
+          example: [{ name: "tag1" }, { color: "red" }],
+        },
+      },
+    },
+    cardUpdateResponse: {
+      type: "object",
+      required: ["name"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        date: {
+          type: "string",
+        },
+        list: {
+          type: "string",
+          $ref: "#/definitions/listCard",
+        },
+        tags: {
+          type: "array",
+          $ref: "#/definitions/tagsCard",
         },
       },
     },
