@@ -694,6 +694,153 @@ const swaggerDocument = {
         },
       },
     },
+    "trello/tags/{cardId}": {
+      get: {
+        tags: ["Tag"],
+        description:
+          "This get to list all cards with listId from authorization user",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "listId",
+            in: "path",
+            description: "ID of list to list all cards",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Tags found",
+            schema: {
+              $ref: "#/definitions/tagGetResponse",
+            },
+          },
+          404: {
+            description: "Tags not found",
+          },
+        },
+      },
+      post: {
+        tags: ["Tag"],
+        description: "This post to create a tag with cardId from logged user",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "cardId",
+            in: "path",
+            description: "ID of card to create a Tag",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          201: {
+            description: "Tag created",
+            schema: {
+              $ref: "#/definitions/tagPostResponse",
+            },
+          },
+          400: {
+            description: "Tag could not be created",
+          },
+        },
+      },
+    },
+    "trello/tags/{tagId}": {
+      get: {
+        tags: ["Tag"],
+        description: "Returns a single tag",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "tagId",
+            in: "path",
+            description: "ID of tag to return",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Tag found",
+            schema: {
+              $ref: "#/definitions/tagGetResponse",
+            },
+          },
+          404: {
+            description: "Tag not found",
+          },
+        },
+      },
+      put: {
+        tags: ["Tag"],
+        description: "Updates a tag with form data",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "tagId",
+            in: "path",
+            description: "ID of tag that needs to be updated",
+            required: true,
+            type: "string",
+          },
+          {
+            name: "name",
+            in: "formData",
+            description: "Update tag name",
+            required: true,
+            type: "string",
+          },
+          {
+            name: "color",
+            in: "formData",
+            description: "Update tag color",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Tag updated",
+            schema: {
+              $ref: "#/definitions/tagUpdateResponse",
+            },
+          },
+          400: {
+            description: "Tag could not be updated",
+          },
+        },
+      },
+      delete: {
+        tags: ["Tag"],
+        description: "Deletes a tag",
+        produces: ["application/json"],
+        parameters: [
+          {
+            name: "api_key",
+            in: "header",
+            required: false,
+            type: "string",
+          },
+          {
+            name: "tagId",
+            in: "path",
+            description: "Tag id to delete",
+            required: true,
+            type: "string",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Tag destroyed",
+          },
+          400: {
+            description: "Tag could not be destroyed",
+          },
+        },
+      },
+    },
   },
   definitions: {
     userCreateResponse: {
@@ -999,6 +1146,74 @@ const swaggerDocument = {
         tags: {
           type: "array",
           $ref: "#/definitions/tagsCard",
+        },
+      },
+    },
+    tagGetResponse: {
+      type: "object",
+      required: ["name", "color"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        color: {
+          type: "string",
+        },
+        card: {
+          type: "array",
+          $ref: "#/definitions/cardTag",
+        },
+      },
+    },
+    cardTag: {
+      type: "object",
+      properties: {
+        name: {
+          type: "string",
+        },
+        description: {
+          type: "string",
+        },
+        date: {
+          type: "string",
+        },
+      },
+    },
+    tagPostResponse: {
+      type: "object",
+      required: ["name", "color"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        color: {
+          type: "string",
+        },
+        card: {
+          type: "array",
+          example: [
+            { id: "2222333" },
+            { name: "card1" },
+            { description: "Description to card1" },
+            { date: "22-06-2022" },
+            { list: "listId" },
+          ],
+        },
+      },
+    },
+    tagUpdateResponse: {
+      type: "object",
+      required: ["name", "color"],
+      properties: {
+        name: {
+          type: "string",
+        },
+        color: {
+          type: "string",
+        },
+        card: {
+          type: "array",
+          $ref: "#/definitions/cardTag",
         },
       },
     },
