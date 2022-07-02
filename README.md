@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/19397183/177006034-33f26d1e-d8ef-4671-97b4-85893284a28a.png)
+
 # Trello Backend
 Manage your projects, organize your tasks and create team spirit in one place.
 This Trello clone was created with educational purposes for Make IT Real Bootcamp V22.
