@@ -15,7 +15,7 @@
   "author": "Cristhian Cepeda, Johan Sora, Daniela Torres",
   "license": "MIT",
   "devDependencies": {
-    "morgan": "^1.10.0",
+    
     "nodemon": "^2.0.16"
   },
   "dependencies": {
@@ -30,7 +30,8 @@
     "mongoose": "^6.3.4",
     "nodemailer": "^6.7.5",
     "socket.io": "^4.5.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "morgan": "^1.10.0"
   },
   "repository": {
     "type": "git",
